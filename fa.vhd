@@ -9,6 +9,6 @@ ENTITY fa IS
   END ENTITY;
   ARCHITECTURE behavior OF fa IS
     BEGIN
-      S = a XOR b XOR Cin;
-      Cout = (a AND b) OR ((a XOR b) AND Cin);
+      S <= a XOR b XOR Cin;
+      Cout <= (a AND b) OR ((a XOR b) AND Cin);
     END ARCHITECTURE behavior;
