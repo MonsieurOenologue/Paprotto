@@ -3,17 +3,22 @@ USE ieee.std_logic_1164.all;
 
 ENTITY shiftreg IS
   PORT(
-    clk, din : in std_logic_vector; 
-    dout : OUT std_logic_vector
+    clk, din, rst : IN std_logic; 
+    dout : OUT std_logic
   );
 END ENTITY shiftreg;
 
 ARCHITECTURE behavior OF shiftreg IS
-  SIGNAL sint: std_logic_vector;
-  PROCESS
+  SIGNAL sint: std_logic;
   BEGIN
-    wait until clk = '1';
-    sint <= din;
-    dout <= sint;
+  PROCESS (clk, rst)
+  BEGIN
+    if rst='1' THEN
+      dout <= '0';
+      sint <= '0';
+    elsif clk = '1' AND clk'EVENT THEN
+      sint <= din;
+      dout <= sint;
+    end if; 
   END PROCESS;
 END behavior;
