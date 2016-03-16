@@ -13,7 +13,7 @@ ___
 
 ## Processor's view
 
-![Processeur](procoimage.png)  
+![Processor](procoImage.png)  
 *Image of the 16 bits processor*  
 
 ## Possible extensions  
