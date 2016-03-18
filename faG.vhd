@@ -22,12 +22,13 @@ ENTITY faG IS
     BEGIN
       fa_array : for i IN 0 TO N-1 GENERATE
         first_cell : IF i = 0 GENERATE
-        fa0 : fa PORT MAP(a=>A(0), b=>B(0), Cin=>Cin, S=>S(0),Cout=>Cout_b(0));
-      END GENERATE first_cell;
-      int_cell : IF i>0 AND i < N-1 GENERATE
-        fai : fa PORT MAP(a=>A(i), b=>B(i), Cout_b(i-1)=>Cin, S=>S(i); Cout=> Cout_b(i));
-      END GENERATE int_cell;
-      last_cell : IF i=N-1 GENERATE
-        faN : fa PORT MAP(a=>A(i),b=>B(i), Cout_b(i-1)=>Cin, S=>S(i), Cout=>Cout);
-      END GENERATE last_cell;
+          fa0 : fa PORT MAP(a=>A(0), b=>B(0), Cin=>Cin, S=>S(0),Cout=>Cout_b(0));
+        END GENERATE first_cell;
+        int_cell : IF i>0 AND i < N-1 GENERATE
+          fai : fa PORT MAP(a=>A(i), b=>B(i), Cin=>Cout_b(i-1), S=>S(i), Cout=> Cout_b(i));
+        END GENERATE int_cell;
+        last_cell : IF i=N-1 GENERATE
+          faN : fa PORT MAP(a=>A(i),b=>B(i), Cin=>Cout_b(i-1), S=>S(i), Cout=>Cout);
+        END GENERATE last_cell;
+      END GENERATE fa_array;
     END ARCHITECTURE behavior;
