@@ -34,7 +34,7 @@ BEGIN
       END GENERATE prem_1;
       
       prem_2 : IF i > 0 GENERATE
-        addN : fa PORTMAP(a=>memS(i-1)(j), s=>memS(i)(j),b=>memET(i)(j),Cin=>memC(i)(j),Cout=>memC(i)(j+1));
+        addN : fa PORT MAP(a=>memS(i-1)(j), s=>memS(i)(j),b=>memET(i)(j),Cin=>memC(i)(j),Cout=>memC(i)(j+1));
       END GENERATE prem_2;
       
     END GENERATE colonne;
