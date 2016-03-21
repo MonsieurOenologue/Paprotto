@@ -172,7 +172,7 @@ BEGIN
            END CASE;
     END PROCESS FSM;
     
-    NS : PROCESS(nextState)
+    NS : PROCESS(nextState, clk)
     BEGIN
         state <= nextState;
     END PROCESS NS;
