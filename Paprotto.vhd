@@ -47,6 +47,7 @@ ARCHITECTURE behavior OF topLevel IS
 		Cout : OUT std_logic
 	);
 	END COMPONENT;
+	--mult 
 	COMPONENT mult IS
 		GENERIC(N:POSITIVE := 8);
 		PORT(
@@ -54,5 +55,22 @@ ARCHITECTURE behavior OF topLevel IS
 		S : OUT std_logic_vector((2*N)-1 DOWNTO 0)
 	);
 	END COMPONENT;
+	--Just think, it'll be useless, we put there in ALU
 
+	SIGNAL R0s : std_logic;
+	SIGNAL R1s : std_logic;
+	SIGNAL R2s : std_logic;
+	SIGNAL R3s : std_logic;
+	SIGNAL R4s : std_logic;
+	SIGNAL R5s : std_logic;
+	SIGNAL R6s : std_logic;
+	SIGNAL R7s : std_logic;
+
+	SIGNAL ALUs : std_logic_vector(3 DOWNTO 0);
+	SIGNAL Gs : std_logic_vector(15 DOWNTO 0);
+	--SIGNAL StorageDatas : std_logic_vector(15 DOWNTO 0);
+	SIGNAL IRSets : std_logic
+	SIGNAL multSel : STD_LOGIC_VECTOR(3 DOWNTO 0);
+BEGIN
+	fsm : FSM port map(run, reset, clk,code(9 DOWNTO 0), done, multSel,R0,R1,R2,R3,R4,R5,R6,R7,As,Gs, ALUs,IRSets);	
 END ARCHITECTURE behavior;
