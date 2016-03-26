@@ -14,8 +14,7 @@ ARCHITECTURE behavior OF shiftreg IS
   PROCESS (clk, rst)
   BEGIN
     if rst='1' THEN
-      dout <= '0';
-      sint <= '0';
+		dout <= (others => '0');
     elsif clk = '1' AND clk'EVENT THEN
       sint <= din;
       dout <= sint;
