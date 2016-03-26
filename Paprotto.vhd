@@ -37,25 +37,27 @@ ARCHITECTURE behavior OF topLevel IS
 				IRSet : OUT std_logic
 			);
 	END COMPONENT;
-	-- Component full Adder Generic that we will use in the ALU
-	COMPONENT faG IS
-		GENERIC(N : POSITIVE := 8);
-		PORT(
-		A,B : IN std_logic_vector(N-1 DOWNTO 0);
-		Cin : IN std_logic;
-		S : OUT std_logic_vector(N-1 DOWNTO 0);
-		Cout : OUT std_logic
-	);
-	END COMPONENT;
-	--mult 
-	COMPONENT mult IS
+
+	COMPONENT alu IS
 		GENERIC(N:POSITIVE := 8);
 		PORT(
-		a,b : IN std_logic_vector(N-1 DOWNTO 0);
-		S : OUT std_logic_vector((2*N)-1 DOWNTO 0)
+				clk : IN std_logic;
+				sel : IN std_logic_vector(3 DOWNTO 0);
+		A, B : IN std_logic_vector(N-1 DOWNTO 0);
+		Q : OUT std_logic_vector(N-1 DOWNTO 0)
+		Cout : OUT std_logic;
 	);
 	END COMPONENT;
-	--Just think, it'll be useless, we put there in ALU
+
+	--Memory generic
+	COMPONENT shiftregG IS
+		GENERIC(N : POSITIVE := 8);
+		PORT(
+		clk,rst,set : IN STD_LOGIC;
+		d : IN STD_LOGIC_VECTOR(N-1 DOWNTO 0);
+		q : OUT STD_LOGIC_VECTOR(N-1 DOWNTO 0)
+	);
+	END COMPONENT;
 
 	SIGNAL R0s : std_logic;
 	SIGNAL R1s : std_logic;
