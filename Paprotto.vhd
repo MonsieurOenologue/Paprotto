@@ -9,6 +9,7 @@ ENTITY topLevel IS
 			code : IN std_logic_vector(15 DOWNTO 0);
 
 			done : out std_logic
+			overflow : out std_logic;
 		);
 END ENTITY topLevel;
 
@@ -59,20 +60,25 @@ ARCHITECTURE behavior OF topLevel IS
 	);
 	END COMPONENT;
 
-	SIGNAL R0s : std_logic;
-	SIGNAL R1s : std_logic;
-	SIGNAL R2s : std_logic;
-	SIGNAL R3s : std_logic;
-	SIGNAL R4s : std_logic;
-	SIGNAL R5s : std_logic;
-	SIGNAL R6s : std_logic;
-	SIGNAL R7s : std_logic;
+	-- Selectors for memorys
+	SIGNAL Rs : std_logic_vector(7 DOWNTO 0);
+	SIGNAL Routs : std_logic_vector(15 DOWNTO 0);
 
 	SIGNAL ALUs : std_logic_vector(3 DOWNTO 0);
 	SIGNAL Gs : std_logic_vector(15 DOWNTO 0);
+	SIGNAL goToGs : std_logic_vector(15 DOWNTO 0);
 	--SIGNAL StorageDatas : std_logic_vector(15 DOWNTO 0);
 	SIGNAL IRSets : std_logic
+	--multSel : select which value will be take
 	SIGNAL multSel : STD_LOGIC_VECTOR(3 DOWNTO 0);
+	-- mults is the exit of the multiplexer
+	SIGNAL mults : STD_LOGIC_VECTOR(15 DOWNTO 0);
+	--As is the exit of A register
+	SIGNAL As : std_logic_vector(15 DOWNTO 0);
 BEGIN
-	fsm : FSM port map(run, reset, clk,code(9 DOWNTO 0), done, multSel,R0,R1,R2,R3,R4,R5,R6,R7,As,Gs, ALUs,IRSets);	
+	fsm : fsm PORT MAP(run, reset, clk, code(9 DOWNTO 0), done, multSel, Rs(0),Rs(1),Rs(2),Rs(3),Rs(4),Rs(5),Rs(6),Rs(7), As, Gs, ALUs, IRSets);	
+	alu : alu PORT MAP(clk, ALUs, As , multSel, goToGs, overflow);
+	memory : for i in 0 to 7 GENERATE
+		shiftregG : shiftregG (Generic : 15) PORT MAP(clk, rst, Rs(i), multSel,Routs(i));
+	END GENERATE memory;
 END ARCHITECTURE behavior;
