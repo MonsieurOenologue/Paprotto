@@ -59,15 +59,15 @@ BEGIN
 				WHEN ST0 =>
 					IF (run = '1') THEN
 						CASE CODOP IS
-							WHEN "0000"=>
+							WHEN "0000" =>
 								nextState <= ST1; -- MVI
-							WHEN "0001"=>
+							WHEN "0001" =>
 								nextState <= ST2; -- MV
-							WHEN "0010"=>
+							WHEN "0010" =>
 								nextState <= ST3; -- ADD
-							WHEN "0011"=> 
+							WHEN "0011" => 
 								nextState <= ST3; -- SUB
-							WHEN "0100"=>
+							WHEN "0100" =>
 								nextState <= ST3; -- MULT
 							WHEN OTHERS => 
 								nextState <= ST7; -- DONE
@@ -76,11 +76,11 @@ BEGIN
 					--	nextState <= ST0;
 					END IF;
 
-				WHEN ST1=> -- MVI
+				WHEN ST1 => -- MVI
 					multSel <= CODOP;
 
 					CASE bit4a6 IS
-						WHEN "000"=>
+						WHEN "000" =>
 							R7 <= '1';
 						WHEN "001" =>
 							R6 <= '1';
@@ -104,11 +104,11 @@ BEGIN
 					nextState <= ST7;
 		--END OF ST1
 
-				WHEN ST2=> -- MV
+				WHEN ST2 => -- MV
 					multSel <= CODOP;
 
 					CASE bit4a6 IS
-						WHEN "000"=>
+						WHEN "000" =>
 							R7 <= '1';
 						WHEN "001" =>
 							R6 <= '1';
@@ -146,7 +146,7 @@ BEGIN
 				WHEN ST5=> -- ADD/SUB/MULT
 					Gset <= '0';
 					CASE bit4a6 IS
-						WHEN "000"=>
+						WHEN "000" =>
 							R7 <= '1';
 						WHEN "001" =>
 							R6 <= '1';
@@ -165,9 +165,9 @@ BEGIN
 						WHEN OTHERS =>
 					END CASE;
 					nextState <= ST7;
-				WHEN ST6=> -- MAUVAIS CALCUL DE MA PART
+				WHEN ST6 => -- MAUVAIS CALCUL DE MA PART
 
-				WHEN ST7=> --DONE
+				WHEN ST7 => --DONE
 					multSel <= "0000";
 					done <= '1';
 			END CASE;

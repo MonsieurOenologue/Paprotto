@@ -28,13 +28,13 @@ BEGIN
     colonne : for j IN 0 TO N GENERATE
       memET(i)(j) <= (a(j) AND b(i));
       
-      prem_1 : IF i=0 GENERATE
+      prem_1 : IF i = 0 GENERATE
         memS(0)(j) <= memET(0)(j);
         memC(0)(4) <= '0';
       END GENERATE prem_1;
       
       prem_2 : IF i > 0 GENERATE
-        addN : fa PORT MAP(a=>memS(i-1)(j), s=>memS(i)(j),b=>memET(i)(j),Cin=>memC(i)(j),Cout=>memC(i)(j+1));
+        addN : fa PORT MAP(a => memS(i-1)(j), s => memS(i)(j),b => memET(i)(j),Cin => memC(i)(j),Cout => memC(i)(j+1));
       END GENERATE prem_2;
       
     END GENERATE colonne;

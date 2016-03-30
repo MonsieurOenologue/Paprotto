@@ -8,8 +8,8 @@ ENTITY topLevel IS
 			run : IN std_logic; 
 			code : IN std_logic_vector(15 DOWNTO 0);
 
-			done : out std_logic
-			overflow : out std_logic;
+			done : out std_logic;
+			overflow : out std_logic
 		);
 END ENTITY topLevel;
 
@@ -68,7 +68,7 @@ ARCHITECTURE behavior OF topLevel IS
 	SIGNAL Gs : std_logic_vector(15 DOWNTO 0);
 	SIGNAL goToGs : std_logic_vector(15 DOWNTO 0);
 	--SIGNAL StorageDatas : std_logic_vector(15 DOWNTO 0);
-	SIGNAL IRSets : std_logic
+	SIGNAL IRSets : std_logic;
 	--multSel : select which value will be take
 	SIGNAL multSel : STD_LOGIC_VECTOR(3 DOWNTO 0);
 	-- mults is the exit of the multiplexer

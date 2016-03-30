@@ -7,8 +7,8 @@ ENTITY alu IS
 			clk : IN std_logic;
 			sel : IN std_logic_vector(3 DOWNTO 0);
 	A, B : IN std_logic_vector(N-1 DOWNTO 0);
-	Q : OUT std_logic_vector(N-1 DOWNTO 0)
-	Cout : OUT std_logic;
+	Q : OUT std_logic_vector(N-1 DOWNTO 0);
+	Cout : OUT std_logic
 );
 END ENTITY alu;
 
@@ -33,18 +33,21 @@ BEGIN
 		if(rising_edge(clk)) THEN
 			CASE sel IS
 				when "0010" =>
-					fa : faG (generic : N) port map(As, Bs, 0, Qs, Cout); --add
+					-- fa : faG (generic : N) port map(As, Bs, 0, Qs, Cout); --add --This line has a problem (see below) : 
+					-- - mismatched input 'generic' expecting ')'
+					-- - A subprogram call can not have an empty parameter list. Add a parameter or remove the parenthesis
+					-- - no viable alternative at input 'N'
 				when "0011" =>
 				--SUB
-				when "0100"=>
+				when "0100" =>
 				--MULT
-				when "0101"=>
+				when "0101" =>
 					Qs <= As OR Bs; 	--OR
-				when "0110"=>
+				when "0110" =>
 					Qs <= NOT As; 		--NOT
-				when "0111"=>
+				when "0111" =>
 					Qs <= As AND Bs;	--AND
-				when "1000"=>
+				when "1000" =>
 					Qs <= As XOR Bs;	--XOR
 				when others =>
 					NULL;
