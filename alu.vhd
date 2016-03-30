@@ -2,19 +2,19 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
 ENTITY alu IS
-	GENERIC(N:POSITIVE := 8);
+	GENERIC(N:IN NATURAL := 8);
 	PORT(
-			clk : IN std_logic;
-			sel : IN std_logic_vector(3 DOWNTO 0);
-	A, B : IN std_logic_vector(N-1 DOWNTO 0);
-	Q : OUT std_logic_vector(N-1 DOWNTO 0);
-	Cout : OUT std_logic
-);
+		clk : IN std_logic;
+		sel : IN std_logic_vector(3 DOWNTO 0);
+		A, B : IN std_logic_vector(N-1 DOWNTO 0);
+		Q : OUT std_logic_vector(N-1 DOWNTO 0);
+		Cout : OUT std_logic
+	);
 END ENTITY alu;
 
 ARCHITECTURE behavior OF alu IS
 	COMPONENT faG IS
-		GENERIC(N : POSITIVE := 8);
+		GENERIC(N : IN NATURAL := 8);
 		PORT(
 		A,B : IN std_logic_vector(N-1 DOWNTO 0);
 		Cin : IN std_logic;
@@ -33,7 +33,7 @@ BEGIN
 		if(rising_edge(clk)) THEN
 			CASE sel IS
 				when "0010" =>
-					-- fa : faG (generic : N) port map(As, Bs, 0, Qs, Cout); --add --This line has a problem (see below) : 
+					 fa : faG GENERIC MAP(N) PORT MAP(As, Bs, '0', Qs, Cout); --add --This line has a problem (see below) : 
 					-- - mismatched input 'generic' expecting ')'
 					-- - A subprogram call can not have an empty parameter list. Add a parameter or remove the parenthesis
 					-- - no viable alternative at input 'N'
@@ -54,5 +54,5 @@ BEGIN
 			END CASE;
 		END IF;
 	END PROCESS;
-	S <= Qs;
+	-- S <= Qs; -- Don't know the purpose of this line (???)
 END ARCHITECTURE behavior;

@@ -11,13 +11,13 @@ END ENTITY shiftreg;
 ARCHITECTURE behavior OF shiftreg IS
   SIGNAL sint: std_logic;
   BEGIN
-  PROCESS (clk, rst)
-  BEGIN
-    if rst='1' THEN
-		dout <= (others => '0');
-    elsif clk = '1' AND clk'EVENT THEN
-      sint <= din;
-      dout <= sint;
-    end if; 
-  END PROCESS;
+  	PROCESS (clk, rst)
+  		BEGIN
+    			if rst='1' THEN
+				dout <= (others => '0');
+    			elsif clk = '1' AND clk'EVENT THEN
+      				sint <= din;
+      				dout <= sint;
+   			end if; 
+  	END PROCESS;
 END behavior;
