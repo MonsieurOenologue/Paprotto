@@ -8,8 +8,8 @@ ENTITY topLevel IS
 			run : IN std_logic; 
 			code : IN std_logic_vector(15 DOWNTO 0);
 
-			done : out std_logic;
-			overflow : out std_logic
+			done : OUT std_logic;
+			overflow : OUT std_logic
 		);
 END ENTITY topLevel;
 
@@ -45,8 +45,8 @@ ARCHITECTURE behavior OF topLevel IS
 				clk : IN std_logic;
 				sel : IN std_logic_vector(3 DOWNTO 0);
 		A, B : IN std_logic_vector(N-1 DOWNTO 0);
-		Q : OUT std_logic_vector(N-1 DOWNTO 0)
-		Cout : OUT std_logic;
+		Q : OUT std_logic_vector(N-1 DOWNTO 0);
+		Cout : OUT std_logic
 	);
 	END COMPONENT;
 
@@ -75,10 +75,11 @@ ARCHITECTURE behavior OF topLevel IS
 	SIGNAL mults : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	--As is the exit of A register
 	SIGNAL As : std_logic_vector(15 DOWNTO 0);
+	
 BEGIN
-	fsm : fsm PORT MAP(run, reset, clk, code(9 DOWNTO 0), done, multSel, Rs(0),Rs(1),Rs(2),Rs(3),Rs(4),Rs(5),Rs(6),Rs(7), As, Gs, ALUs, IRSets);	
-	alu : alu PORT MAP(clk, ALUs, As , multSel, goToGs, overflow);
+	fsm : fsm PORT MAP(run, reset, clk, code(9 DOWNTO 0), done, multSel, Rs(0),Rs(1),Rs(2),Rs(3),Rs(4),Rs(5),Rs(6),Rs(7), As, Gs, ALUs, IRSets); -- Problem : Duplicate declaration	
+	alu : alu PORT MAP(clk, ALUs, As , multSel, goToGs, overflow); -- Problem : Duplicate declaration
 	memory : for i in 0 to 7 GENERATE
-		shiftregG : shiftregG (Generic : 15) PORT MAP(clk, rst, Rs(i), multSel,Routs(i));
+		shiftregG : shiftregG (Generic : 15) PORT MAP(clk, rst, Rs(i), multSel, Routs(i));
 	END GENERATE memory;
 END ARCHITECTURE behavior;
