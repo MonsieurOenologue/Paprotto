@@ -5,14 +5,14 @@ ENTITY fsm IS
 		clk, reset, run : IN STD_LOGIC;
 		IR : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 	
-		R0, R1, R2, R3, R4, R5, R6, R7, Aset, Gset, done : OUT STD_LOGIC;
+		R0, R1, R2, R3, R4, R5, R6, R7, Aset, Gset, IRset, done : OUT STD_LOGIC;
 		multSel : OUT STD_LOGIC_VECTOR(3 DOWNTO 0) := "ZZZZ";
 		aluSel : OUT STD_LOGIC_VECTOR(3 DOWNTO 0) := "ZZZZ"
 		);
 END ENTITY fsm;
 
 ARCHITECTURE Behavior OF fsm IS
-	TYPE fsm_states IS (ST0, ST1, ST2, ST3, ST4, ST5, ST6);
+	TYPE fsm_states IS (ST0, ST1, ST2, ST3, ST4, ST5, ST6, ST7);
 	SIGNAL current_state, next_state : fsm_states;
 	SIGNAL mults, CODOP, mults2 : STD_LOGIC_VECTOR(3 DOWNTO 0);
 	SIGNAL RegChoice : STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -26,8 +26,11 @@ BEGIN
 	BEGIN
 		next_state <= current_state;
 		CASE current_state IS
+		  WHEN ST7 =>
+		    IF run = '1' THEN
+		      next_state <= ST0;
+		    END IF;
 			WHEN ST0 =>
-				IF run = '1' THEN
 					CASE CODOP IS
 						WHEN "0000" =>
 							next_state <= ST1;
@@ -42,7 +45,6 @@ BEGIN
 						WHEN others =>
 							next_state <= ST0;
 					END CASE;
-				END IF;
 			WHEN ST1 =>
 				next_state <= ST6;
 			WHEN ST2 =>
@@ -54,7 +56,7 @@ BEGIN
 			WHEN ST5 =>
 				next_state <= ST6;
 			WHEN ST6 =>
-				next_state <= ST0;
+				next_state <= ST7;
 		END CASE;
 	END PROCESS NSL;
 
@@ -72,11 +74,14 @@ BEGIN
 		Gset <= '0';
 		multSel <= "0000";
 		aluSel <= "0000";
+		IRSet <= '0';
 		CASE current_state IS
-			WHEN ST0 =>
+		  WHEN ST7 =>
 			  IF run = '1' THEN
-			   done <= '0';
+			    IRSet <= '1';
+			    done <= '0';
 			  END IF;
+			WHEN ST0 =>
 			WHEN ST1 =>
 				multSel <= "0000";
 				CASE RegChoice IS
