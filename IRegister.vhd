@@ -15,18 +15,15 @@ END IRegister;
 
 
 --Architecture behavior
-ARCHITECTURE behavior OF mult IS
-	SIGNAL CODOP : std_logic_vector(3 DOWNTO 0);
-	SIGNAL Rx : std_logic_vector(3 DOWNTO 0);
-	SIGNAL Ry : std_logic_vector(3 DOWNTO 0);
+ARCHITECTURE behavior OF IRegister IS
+BEGIN
 	
-	-- xxxx yyy zzzzz aaaae
-	-- x bits CODOP
-	-- y choix du registre pour stocker Z
-	-- a choix du z registre pour le z opérations
-	
-	
+-- Just a register without the clock part
+PROCESS(IRset, Q)
 	BEGIN
+		if IRset = '1' then Q <= D;
+		end if;
+	END PROCESS;
 
 END ARCHITECTURE;
 
