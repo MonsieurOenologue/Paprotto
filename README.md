@@ -1,5 +1,7 @@
 # Paprotto  
 
+![Logo](Paprotto.png) 
+
  A 16 bits processor, made by Monsieur &amp; Sephage
 
 ___
