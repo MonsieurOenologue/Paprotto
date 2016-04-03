@@ -35,6 +35,6 @@ ARCHITECTURE behavior OF topLevel IS
 BEGIN
 	databus <= (OTHERS => '0');
 	LEDG(0) <= BT(0);
-	CPU : Paprotto GENERIC MAP (16) PORT MAP(BT(2), BT(1), BT(0), SW, databus, LEDG(1));
+	CPU : Paprotto GENERIC MAP (16) PORT MAP(BT(2), BT(1), BT(0), SW, databus(1), LEDG(1));
 	
 END;
