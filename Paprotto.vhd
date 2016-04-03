@@ -1,7 +1,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
-ENTITY topLevel IS
+ENTITY Paprotto IS
 	PORT(
 			clk : IN STD_LOGIC;
 			reset : IN std_logic;
@@ -13,7 +13,7 @@ ENTITY topLevel IS
 		);
 END ENTITY topLevel;
 
-ARCHITECTURE behavior OF topLevel IS
+ARCHITECTURE behavior OF Paprotto IS
 	--Component controler
 	COMPONENT fsm IS
 		PORT(
